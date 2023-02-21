@@ -5,31 +5,33 @@ export class Shape {
     this.pos = position;
   }
 
-  get position(){
+  get position() {
     return this.pos;
   }
 }
 
-export class Sphere extends Shape{
+export class Sphere extends Shape {
   constructor(position, radius) {
     super(position);
     this.rad = radius;
   }
 
-  get radius(){
+  get radius() {
     return this.rad;
   }
 
-  checkCollision(ray){
+  checkCollision(ray) {
     const oc = ray.origin.substract(this.position);
-    const a = Vec3.dot(ray.direction, ray.direction);
-    const b = 2 * Vec3.dot(oc, ray.direction);
-    const c = Vec3.dot(oc, oc)-(this.radius*this.radius);
-    const discriminant = b*b - 4*a*c;
+
+    const a = ray.direction.lengthSquared();
+    const half_b = Vec3.dot(oc, ray.direction);
+    const c = oc.lengthSquared() - this.radius * this.radius;
+    const discriminant = half_b * half_b - a * c;
+
     if (discriminant < 0) {
-        return -1;
+      return -1.0;
     } else {
-        return (-b - Math.sqrt(discriminant) ) / (2*a);
+      return (-half_b - Math.sqrt(discriminant)) / a;
     }
   }
 }
