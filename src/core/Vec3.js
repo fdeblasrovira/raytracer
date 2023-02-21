@@ -57,10 +57,10 @@ export class Vec3 {
   }
 
   length() {
-    return Math.sqrt(this.#lengthSquared());
+    return Math.sqrt(this.lengthSquared());
   }
 
-  #lengthSquared() {
+  lengthSquared() {
     return this.vector.reduce((acc, current) => acc + current * current, 0);
   }
 
