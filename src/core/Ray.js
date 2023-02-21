@@ -15,4 +15,8 @@ export class Ray {
   at(t) {
     return this.direction.multiplyBy(t).add(this.originVector);
   }
+
+  checkCollision(object){
+    return object.checkCollision(this)
+  }
 }

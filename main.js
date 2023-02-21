@@ -2,8 +2,15 @@ import "./style.css";
 import { Point3, Color3, Vec3 } from "./src/core/Vec3.js";
 import { Ray } from "./src/core/Ray.js";
 import { lerp, toRGBA } from "./src/utils/Color.js";
+import { Sphere } from "./src/shapes/Sphere";
 
 function rayColor(ray) {
+  let collision = ray.checkCollision(sphere);
+  if (collision > 0) {
+    let normal = ray.at(collision).substract(sphere.position).unit();
+    return normal.add(new Vec3(1,1,1)).multiplyBy(0.5);
+  }
+  
   const yComponent = ray.direction.unit().y;
 
   // We need the value to be between 0 and 1.
@@ -50,22 +57,7 @@ ctx.drawImage(img, 0, 0);
 const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight);
 const data = imageData.data;
 
-const btn1 = document.getElementById("btn1");
-const btn2 = document.getElementById("btn2");
-btn1.addEventListener("click", moveUp);
-btn2.addEventListener("click", moveDown);
-
-function moveUp() {
-  origin = origin.add(new Vec3(0, 1, 0));
-  render();
-  ctx.putImageData(imageData, 0, 0);
-}
-function moveDown() {
-  origin = origin.add(new Vec3(0, -1, 0));
-  render();
-  ctx.putImageData(imageData, 0, 0);
-}
-
+let sphere = new Sphere(new Point3(0,0,-1), 0.5);
 function render() {
   let counter = 0;
   for (let j = imageHeight - 1; j >= 0; j--) {
