@@ -79,12 +79,4 @@ export class Color3 extends Vec3 {
   constructor(x, y, z) {
     super(x, y, z);
   }
-
-  toRGB() {
-    return this.vector.map((x) => Math.round(255 * x));
-  }
-
-  toRGBA() {
-    return [...this.toRGB(), 255];
-  }
 }
