@@ -1,3 +1,3 @@
-export interface iHittable{
-    checkRayCollision(object: any): number;
+export interface iHittable {
+  checkRayCollision(object: any): number;
 }
