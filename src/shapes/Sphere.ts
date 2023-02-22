@@ -1,6 +1,7 @@
-import { Vec3, Point3 } from "../core/Vec3";
+import { Vec3, Point3, Color3 } from "../core/Vec3";
 import { Ray } from "../core/Ray";
 import { iHittable } from "../interfaces/iHittable";
+import { iRenderable } from "../interfaces/iRenderable";
 
 export class Shape {
   pos: Point3;
@@ -14,7 +15,7 @@ export class Shape {
   }
 }
 
-export class Sphere extends Shape implements iHittable {
+export class Sphere extends Shape implements iHittable, iRenderable {
   rad: number;
 
   constructor(position: Point3, radius: number) {
@@ -39,5 +40,10 @@ export class Sphere extends Shape implements iHittable {
     } else {
       return (-half_b - Math.sqrt(discriminant)) / a;
     }
+  }
+
+  colorAt(point: Point3): Color3 {
+    let normal = point.substract(this.position).unit();
+    return normal.add(new Vec3(1, 1, 1)).multiplyBy(0.5);
   }
 }
