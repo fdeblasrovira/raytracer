@@ -1,17 +1,16 @@
 import { lerp } from "../utils/Color";
 import { Color3, Point3, Vec3 } from "./Vec3";
+import { Viewport } from "./Viewport";
 
 export class Camera {
   position: Point3;
   direction: Vec3;
-  distance: number;
 
   getBackground: BackgroundFunction;
 
-  constructor(pos: Point3, dir: Vec3, viewportDistance: number) {
+  constructor(pos: Point3, dir: Vec3, viewport: Viewport) {
     this.position = pos;
     this.direction = dir;
-    this.distance = viewportDistance;
 
     // Default color
     this.getBackground = function (point: Point3) {
