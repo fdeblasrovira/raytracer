@@ -1,26 +1,31 @@
-import { Vec3 } from "../core/Vec3.js";
+import { Vec3, Point3 } from "../core/Vec3";
+import { Ray } from "../core/Ray";
 
 export class Shape {
-  constructor(position) {
+  pos: Point3;
+
+  constructor(position: Point3) {
     this.pos = position;
   }
 
-  get position() {
+  get position(): Point3 {
     return this.pos;
   }
 }
 
 export class Sphere extends Shape {
-  constructor(position, radius) {
+  rad: number;
+
+  constructor(position: Point3, radius: number) {
     super(position);
     this.rad = radius;
   }
 
-  get radius() {
+  get radius(): number {
     return this.rad;
   }
 
-  checkCollision(ray) {
+  checkCollision(ray: Ray): number {
     const oc = ray.origin.substract(this.position);
 
     const a = ray.direction.lengthSquared();
