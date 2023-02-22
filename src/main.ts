@@ -53,10 +53,8 @@ const lowerLeftPoint = origin
   .substract(vertical.divideBy(2))
   .substract(new Vec3(0, 0, focalLength));
 
-const img = new Image();
 const canvas = <HTMLCanvasElement>document.getElementById("canvas");
 const ctx: any = canvas.getContext("2d");
-ctx.drawImage(img, 0, 0);
 
 const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight);
 const data = imageData.data;
