@@ -1,3 +1,3 @@
 export interface iHittable{
-    checkCollision(object: any): number;
+    checkRayCollision(object: any): number;
 }

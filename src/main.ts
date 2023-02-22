@@ -5,7 +5,7 @@ import { lerp, toRGBA } from "./utils/Color";
 import { Sphere } from "./shapes/Sphere";
 
 function rayColor(ray: Ray) {
-  let collision = ray.checkCollision(sphere);
+  let collision = ray.checkRayCollision(sphere);
   if (collision > 0) {
     let normal = ray.at(collision).substract(sphere.position).unit();
     return normal.add(new Vec3(1, 1, 1)).multiplyBy(0.5);

@@ -1,5 +1,6 @@
 import { Vec3, Point3 } from "../core/Vec3";
 import { Ray } from "../core/Ray";
+import { iHittable } from "../interfaces/iHittable";
 
 export class Shape {
   pos: Point3;
@@ -13,7 +14,7 @@ export class Shape {
   }
 }
 
-export class Sphere extends Shape {
+export class Sphere extends Shape implements iHittable {
   rad: number;
 
   constructor(position: Point3, radius: number) {
@@ -25,7 +26,7 @@ export class Sphere extends Shape {
     return this.rad;
   }
 
-  checkCollision(ray: Ray): number {
+  checkRayCollision(ray: Ray): number {
     const oc = ray.origin.substract(this.position);
 
     const a = ray.direction.lengthSquared();
