@@ -1,0 +1,1 @@
+export const PI: number = 3.1415926535897932385;

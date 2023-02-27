@@ -71,7 +71,7 @@ export class Scene {
         let finalColor: Color3 = this.currentCamera.getBackground(ray.direction);
 
         this.objects.forEach((element) => {
-          let collision = ray.checkRayCollision(element);
+          let collision = ray.checkRayCollision(element,1,1);
           if (collision > 0) {
             finalColor = element.colorAt(ray.at(collision));
           }

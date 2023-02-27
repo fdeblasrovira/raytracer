@@ -21,7 +21,7 @@ export class Ray {
     return this.direction.multiplyBy(t).add(this.origin);
   }
 
-  checkRayCollision(object: iHittable): number {
-    return object.checkRayCollision(this);
+  checkRayCollision(object: iHittable, minT: number, maxT: number): number {
+    return object.checkRayCollision(this, minT, maxT);
   }
 }

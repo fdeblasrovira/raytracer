@@ -26,7 +26,7 @@ export class Sphere extends Shape implements iHittable {
     return this.rad;
   }
 
-  checkRayCollision(ray: Ray): number {
+  checkRayCollision(ray: Ray, minT: number, maxT: number): number {
     const oc = ray.origin.substract(this.position);
 
     const a = ray.direction.lengthSquared();
