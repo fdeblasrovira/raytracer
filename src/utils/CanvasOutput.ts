@@ -8,9 +8,12 @@ export class CanvasOutput implements iOutput {
   data: Uint8ClampedArray;
   imageData: any;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, width: number, height: number) {
     this.canvas = canvas;
     this.context = this.canvas.getContext("2d");
+
+    this.context.canvas.width = width;
+    this.context.canvas.height = height;
 
     this.imageData = this.context.getImageData(
       0,
