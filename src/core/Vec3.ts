@@ -33,7 +33,7 @@ export class Vec3 {
     return this.vec;
   }
 
-  invert(): Vec3 {
+  inverse(): Vec3 {
     return Vec3.from(this.vector.map((x) => -1 * x));
   }
 

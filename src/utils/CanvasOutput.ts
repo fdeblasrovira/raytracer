@@ -24,10 +24,17 @@ export class CanvasOutput implements iOutput {
     this.data = this.imageData.data;
   }
 
-  writeColor(color: Color3, x: number, y: number): void {
+  get width(): number{
+    return this.canvas.width
+  }
+  get height(): number{
+    return this.canvas.height
+  }  
+
+  writeColor( x: number, y: number, color: Color3): void {
     let rgbaValues = toRGBA(color);
 
-    let pixelNumber = x * this.canvas.height + y;
+    let pixelNumber = y * this.canvas.width + x;
     let dataIndex = pixelNumber * 4;
 
     this.data[dataIndex] = rgbaValues[0];

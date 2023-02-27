@@ -1,10 +1,14 @@
 import "./styles/style.css";
 import { Point3, Color3, Vec3 } from "./core/Vec3";
+import { Scene } from "./core/Scene";
 import { Ray } from "./core/Ray";
 import { lerp, toRGBA } from "./utils/Color";
 import { Sphere } from "./shapes/Sphere";
+import { Viewport } from "./core/Viewport";
+import { Camera } from "./core/Camera";
+import { CanvasOutput } from "./utils/CanvasOutput";
 
-function rayColor(ray: Ray) {
+/* function rayColor(ray: Ray) {
   let collision = ray.checkRayCollision(sphere);
   if (collision > 0) {
     let normal = ray.at(collision).substract(sphere.position).unit();
@@ -32,36 +36,45 @@ function writeColor(
   data[dataIndex + 1] = rgbaValues[1];
   data[dataIndex + 2] = rgbaValues[2];
   data[dataIndex + 3] = rgbaValues[3];
-}
-// Image
-const aspectRatio = 16.0 / 9.0;
-const imageWidth = 480;
-const imageHeight = Math.round(imageWidth / aspectRatio);
+} */
 
-// Camera
-const viewportHeight = 2;
-const viewportWidth = aspectRatio * viewportHeight;
-const focalLength = 1;
+const origin = new Point3(0, 0, 0);
 
-let origin = new Point3(0, 0, 0);
-const horizontal = new Vec3(viewportWidth, 0, 0);
-const vertical = new Vec3(0, viewportHeight, 0);
+// Create Viewport and Camera
+const vpHeight = 2;
+const vpAspectRatio = 16 / 9;
+const vp = new Viewport(vpHeight * vpAspectRatio, vpHeight, vpAspectRatio, 1);
 
-// lower_left_corner = origin - horizontal/2 - vertical/2 - vec3(0, 0, focal_length);
-const lowerLeftPoint = origin
-  .substract(horizontal.divideBy(2))
-  .substract(vertical.divideBy(2))
-  .substract(new Vec3(0, 0, focalLength));
+const camera1 = new Camera(origin, new Vec3(0, 0, -1), vp);
+const camera2 = new Camera(new Point3(0,0,-3), new Vec3(0,0,1), vp);
 
-const canvas = <HTMLCanvasElement>document.getElementById("canvas");
-const ctx: any = canvas.getContext("2d");
+// We will output the image to canvas
+let imageHeight = 480;
+let imageWidth = imageHeight * vpAspectRatio;
+const canvasElem = <HTMLCanvasElement>document.getElementById("canvas");
+const canvas = new CanvasOutput(canvasElem, imageWidth, imageHeight);
 
-const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight);
-const data = imageData.data;
+// Create Scene and add camera
+const scene = new Scene();
+const cameraId1 = scene.addCamera(camera1);
+const cameraId2 = scene.addCamera(camera2);
+scene.useCamera(cameraId1);
 
+// Instantiate a simple sphere
 let sphere = new Sphere(new Point3(0, 0, -1), 0.5);
-function render() {
-  let counter = 0;
+scene.instantiate(sphere);
+
+// Render the scene
+scene.render(canvas);
+
+// Utility buttons
+document.getElementById("cameraButton")?.addEventListener("click", function(){
+  scene.nextCamera();
+  scene.render(canvas);
+});
+
+/* function render() {
+  // let counter = 0;
   for (let j = imageHeight - 1; j >= 0; j--) {
     //console.log((j / imageHeight) * 100 + "%");
     for (let i = 0; i < imageWidth; i++) {
@@ -86,3 +99,4 @@ function render() {
 
 render();
 ctx.putImageData(imageData, 0, 0);
+ */

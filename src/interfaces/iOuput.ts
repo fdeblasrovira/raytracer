@@ -1,6 +1,8 @@
 import { Color3 } from "../core/Vec3";
 
 export interface iOutput {
-  writeColor(color: Color3, x: number, y: number): void;
+  writeColor( x: number, y: number, color: Color3): void;
+  width: number;
+  height: number;
   render(): void;
 }
