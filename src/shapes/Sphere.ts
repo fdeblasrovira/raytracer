@@ -26,6 +26,10 @@ export class Sphere extends Shape implements iHittable {
     return this.rad;
   }
 
+  normalAt(point: Point3): Vec3{
+    return point.substract(this.position).unit();
+  }
+
   checkRayCollision(ray: Ray, minT: number, maxT: number): number {
     const oc = ray.origin.substract(this.position);
 
@@ -35,9 +39,11 @@ export class Sphere extends Shape implements iHittable {
     const discriminant = half_b * half_b - a * c;
 
     if (discriminant < 0) {
-      return -1.0;
+      return -1;
     } else {
-      return (-half_b - Math.sqrt(discriminant)) / a;
+      let root = (-half_b - Math.sqrt(discriminant)) / a
+      if (root < minT || maxT < root) return -1;
+      return root;
     }
   }
 

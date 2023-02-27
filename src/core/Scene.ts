@@ -57,6 +57,8 @@ export class Scene {
       //console.log((j / output.height) * 100 + "%");
 
       for (let i = 0; i < output.width; i++) {
+        let closestDistance: number = Infinity;
+        let closestObject: any = null;
         let u = i / (output.width - 1);
         let v = j / (output.height - 1);
 
@@ -71,12 +73,20 @@ export class Scene {
         let finalColor: Color3 = this.currentCamera.getBackground(ray.direction);
 
         this.objects.forEach((element) => {
-          let collision = ray.checkRayCollision(element,1,1);
+          let collision = ray.checkRayCollision(element,1,10);
           if (collision > 0) {
-            finalColor = element.colorAt(ray.at(collision));
+            // Only count hits that collide with the outside surface of an object
+            if (Vec3.dot(this.currentCamera.direction, element.normalAt(ray.at(collision))) < 0){
+              if (collision < closestDistance){
+                closestDistance = collision;
+                closestObject = element;
+              }
+            }
           }
         });
 
+        if (closestObject !== null) finalColor = closestObject.colorAt(ray.at(closestDistance));
+        
         output.writeColor(i, j, finalColor);
       }
     }

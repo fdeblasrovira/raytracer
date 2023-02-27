@@ -14,7 +14,7 @@ const vpAspectRatio = 16 / 9;
 const vp = new Viewport(vpHeight * vpAspectRatio, vpHeight, vpAspectRatio, 1);
 
 const camera1 = new Camera(origin, new Vec3(0, 0, -1), vp);
-const camera2 = new Camera(new Point3(0, 0, 0), new Vec3(0, 0, 1), vp);
+const camera2 = new Camera(new Vec3(0, 0, -11), new Vec3(0, 0, 1), vp);
 
 // We will output the image to canvas
 let imageHeight = 480;
@@ -29,8 +29,8 @@ scene.addCamera(camera2);
 scene.useCamera(cameraId1);
 
 // Instantiate a simple sphere
-scene.instantiate(new Sphere(new Point3(0, 0, 0), 0.5));
-scene.instantiate(new Sphere(new Point3(-0.5, 0, -1), 0.5));
+scene.instantiate(new Sphere(new Point3(1, 1, -2), 0.5));
+scene.instantiate(new Sphere(new Point3(0, 0, -5), 1));
 
 // Render the scene
 scene.render(canvas);
